@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "graphics.h"
+#include "players.h"
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
@@ -17,29 +18,47 @@ void draw_rectangle(int y1, int x1, int y2, int x2)
     mvaddch(y2, x2, ACS_LRCORNER);
 }
 
+void print_player_scores(int sx, int sy, struct Player *players) {
+  for (int i=0; i<4; ++i) {
+    mvprintw(sy+i, sx, players[i].name);
+    char dollars[10];
+    sprintf(dollars, "$%d", players[i].score);
+    mvprintw(sy+i, sx+28, dollars);
+  }
+}
+
 void draw_init() {
   initscr();
   noecho();
   curs_set(0);
   start_color();
+  // init_color(COLOR_BLUE, 24, 48, 913);
+
 	init_pair(1, COLOR_BLUE, COLOR_BLACK);
+  init_pair(2, COLOR_BLACK, COLOR_BLUE);
+  init_pair(3, COLOR_WHITE, COLOR_BLUE);
+  init_color(COLOR_GREEN, 200, 200, 200);
+  init_pair(4, COLOR_GREEN, COLOR_BLACK);
   keypad(stdscr, true);
   clear();
 }
 
+int string_offset_x(char *str, int offset) {
+  return (int)(offset-strlen(str))/2+1;
+}
 int string_offset(char *str) {
-  return (int)(32-strlen(str))/2+1;
+  return string_offset_x(str, 32);
 }
 
 void mvprintc(char *text, int cx, int cy, int offx, int offy) {
   mvprintw(offy+cy*7+3, offx+cx*33+string_offset(text), text);
 }
 
-void draw_board() {
+void draw_board(struct Player *players) {
   draw_init();
-  int cursor_x = 1, cursor_y = 1, sx=0, sy=6;
+  int cursor_x = 1, cursor_y = 1, sx=0, sy=7;
   const w = 33 * 6;
-  const h = 7 * 7;
+  const h = 6 * 7;
   while (true) {
     clear();
     // Main box
@@ -50,13 +69,13 @@ void draw_board() {
     mvhline(sy+h, sx, 0, w);
 
     // Tee's
-    for (int x=0; x<7; ++x) {
-      for (int y=0; y<7; ++y) {
+    for (int x=0; x<6; ++x) {
+      for (int y=0; y<6; ++y) {
         mvaddch(sy+y*7, sx+x*33, ACS_PLUS);
         if (y == 0) mvaddch(sy, sx+x*33, ACS_TTEE);
         if (x == 0) mvaddch(sy+y*7, sx, ACS_LTEE);
-        if (x == 6) mvaddch(sy+y*7, sx+w, ACS_RTEE);
-        if (y == 6) mvaddch(sy+h, sx+x*33, ACS_BTEE);
+        if (x == 5) mvaddch(sy+y*7, sx+w, ACS_RTEE);
+        if (y == 5) mvaddch(sy+h, sx+x*33, ACS_BTEE);
       }
     }
 
@@ -77,64 +96,35 @@ void draw_board() {
     attroff(COLOR_PAIR(1));
 
     attron(COLOR_PAIR(1));
-    mvprintw(0,0,"      _                                _       _ ");
-    mvprintw(1,0,"     | | ___  ___  _ __   __ _ _ __ __| |_   _| |");
-    mvprintw(2,0,"  _  | |/ _ \\/ _ \\| '_ \\ / _` | '__/ _` | | | | |");
-    mvprintw(3,0," | |_| |  __/ (_) | |_) | (_| | | | (_| | |_| |_|");
-    mvprintw(4,0,"  \\___/ \\___|\\___/| .__/ \\__,_|_|  \\__,_|\\__, (_)");
-    mvprintw(5,0,"                  |_|                    |___/   ");
+    attron(A_BOLD);
+    mvprintw(0,w-52,"      _                                _       _ ");
+    mvprintw(1,w-52,"     | | ___  ___  _ __   __ _ _ __ __| |_   _| |");
+    mvprintw(2,w-52,"  _  | |/ _ \\/ _ \\| '_ \\ / _` | '__/ _` | | | | |");
+    mvprintw(3,w-52," | |_| |  __/ (_) | |_) | (_| | | | (_| | |_| |_|");
+    mvprintw(4,w-52,"  \\___/ \\___|\\___/| .__/ \\__,_|_|  \\__,_|\\__, (_)");
+    mvprintw(5,w-52,"                  |_|                    |___/   ");
     attroff(COLOR_PAIR(1));
+    attroff(A_BOLD);
+    attron(A_UNDERLINE);
+    attron(COLOR_PAIR(4));
+    for (int i=1;i<6;++i)
+      mvhline(i,16, i == 1 ? ' ' : '.', 34);
+    attroff(COLOR_PAIR(4));
+    attron(COLOR_PAIR(1));
+    attron(A_BOLD);
+    char *scoreboard_text = "~~~* S C O R E B O A R D *~~~";
+    attroff(A_BOLD);
+    mvprintw(1,16+string_offset_x(scoreboard_text, 34), scoreboard_text);
+    attroff(COLOR_PAIR(1));
+    // attroff(COLOR_PAIR(3));
+    
+    draw_rectangle(sy-7, sx+16, sy-1, sx+50);
 
-    int _x=0, _y=0;
-    mvprintc("What", _x++, _y, sx, sy);
-    mvprintc("the", _x++, _y, sx, sy);
-    mvprintc("fuck", _x++, _y, sx, sy);
-    mvprintc("did", _x++, _y, sx, sy);
-    mvprintc("you", _x++, _y, sx, sy);
-    mvprintc("just", _x++, _y, sx, sy);
-    _y++; _x=0;
-    mvprintc("fucking", _x++, _y, sx, sy);
-    mvprintc("say", _x++, _y, sx, sy);
-    mvprintc("about", _x++, _y, sx, sy);
-    mvprintc("me,", _x++, _y, sx, sy);
-    mvprintc("you", _x++, _y, sx, sy);
-    mvprintc("little", _x++, _y, sx, sy);
-    _y++; _x=0;
-    mvprintc("bitch?", _x++, _y, sx, sy);
-    mvprintc("I'll", _x++, _y, sx, sy);
-    mvprintc("have", _x++, _y, sx, sy);
-    mvprintc("you", _x++, _y, sx, sy);
-    mvprintc("know", _x++, _y, sx, sy);
-    mvprintc("I", _x++, _y, sx, sy);
-    _y++; _x=0;
-    mvprintc("graduated", _x++, _y, sx, sy);
-    mvprintc("top", _x++, _y, sx, sy);
-    mvprintc("of", _x++, _y, sx, sy);
-    mvprintc("my", _x++, _y, sx, sy);
-    mvprintc("class", _x++, _y, sx, sy);
-    mvprintc("in", _x++, _y, sx, sy);
-    _y++; _x=0;
-    mvprintc("the", _x++, _y, sx, sy);
-    mvprintc("Navy", _x++, _y, sx, sy);
-    mvprintc("Seals,", _x++, _y, sx, sy);
-    mvprintc("and", _x++, _y, sx, sy);
-    mvprintc("I've", _x++, _y, sx, sy);
-    mvprintc("been", _x++, _y, sx, sy);
-    _y++; _x=0;
-    mvprintc("involved", _x++, _y, sx, sy);
-    mvprintc("in", _x++, _y, sx, sy);
-    mvprintc("numerous", _x++, _y, sx, sy);
-    mvprintc("secret", _x++, _y, sx, sy);
-    mvprintc("raids", _x++, _y, sx, sy);
-    mvprintc("on", _x++, _y, sx, sy);
-    _y++; _x=0;
-    mvprintc("Al-Quaeda,", _x++, _y, sx, sy);
-    mvprintc("and", _x++, _y, sx, sy);
-    mvprintc("I have over", _x++, _y, sx, sy);
-    mvprintc("300", _x++, _y, sx, sy);
-    mvprintc("confirmed", _x++, _y, sx, sy);
-    mvprintc("kills", _x++, _y, sx, sy);
+    print_player_scores(17, 2, players);
+    attroff(A_UNDERLINE);
+    
 
+    refresh();
     int c = getch();
     switch (c) {
       case KEY_UP:
@@ -149,8 +139,6 @@ void draw_board() {
       case 10: // Backup for enter
         goto END;
     }
-    
-
     refresh();
   }
   END:
