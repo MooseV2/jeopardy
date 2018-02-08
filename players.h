@@ -16,6 +16,7 @@
 struct Player {
     char name[MAX_LEN];
     int score;
+    bool turn;
 };
 
 // Returns true if the player name matches one of the existing players
@@ -23,6 +24,6 @@ struct Player {
 
 // Go through the list of players and update the score for the 
 // player given their name
-extern void update_score(struct Player *players, int num_players, char *name, int score);
+extern void updateScore(struct Player *player, int newScore);
 
 #endif /* PLAYERS_H_ */

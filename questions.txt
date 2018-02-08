@@ -1,0 +1,37 @@
+6
+Geography
+This country celebrates#A1
+The historic Battle of the Somme in World War 1 was fought in this country#France
+Q3#A3
+Q4#A4
+Q5#A5
+Science
+This element is third on the periodic table, right after helium#Lithium
+This atomic particle has no charge#Neutron
+Table salt is made of sodium, and this element#Chlorine
+Qq4#Aa4
+Qq5#Aa5
+Category3Name
+q1#A1a
+Qq2#A2a
+Qq3#A3a
+Qq4#Aa4
+Qq5#Aa5
+Category4Name
+q1#A1a
+Qq2#A2a
+Qq3#A3a
+Qq4#Aa4
+Qq5#Aa5
+Category5Name
+q1#A1a
+Qq2#A2a
+Qq3#A3a
+Qq4#Aa4
+Qq5#Aa5
+Category6Name
+q1#A1a
+Qq2#A2a
+Qq3#A3a
+Qq4#Aa4
+Qq5#Aa5

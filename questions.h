@@ -12,6 +12,7 @@
 
 #define MAX_LEN 256
 #define NUM_CATEGORIES 6
+#define NUM_Q_PER_CATEGORY 5
 // The number of questions, you can use this in your functions in
 // questions.c, this can be accessed in questions.c
 #define NUM_QUESTIONS 36
@@ -25,11 +26,15 @@ static char categories[NUM_CATEGORIES][MAX_LEN] = {
 
 // Questions struct for each question
 struct Question {
-    char category[MAX_LEN];
     char question[MAX_LEN];
     char answer[MAX_LEN];
     int value;
     bool answered;
+};
+
+struct Category {
+    char name[MAX_LEN];
+    struct Question questions[NUM_Q_PER_CATEGORY];
 };
 // An array of 12 questions (4 for each category), initialized in initialize_game
 // this may need to be a pointer if you want it set dynamically
@@ -48,5 +53,5 @@ extern bool valid_answer(char *category, int value, char *answer);
 
 // Returns true if the question has already been answered
 extern bool already_answered(char *category, int value);
-
+extern struct Category* load_questions(char *filename);
 #endif /* QUESTIONS_H_ */

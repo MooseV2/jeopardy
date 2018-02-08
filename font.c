@@ -85,33 +85,3 @@ void draw_question(int x, int y, int line_len, char *text, int vspacing) {
 
   }
 }
-
-int main(int argc, char *argv[]) {
-  
-
-
-  setlocale(LC_ALL, "");
-  initscr();
-  noecho();
-  curs_set(false);  
-  int O = 0;
-  while (1) {
-    clear();
-
-    // draw_word(10,10,"....!''''0123456789:;=?@ABCDENOPQRSTUVWXYZ'[\\]_ ");
-    draw_question(10,10,40,"HELLO WORLD MY NAME IS HELLO", 4);
-    getch();
-    O++;
-  }
-  // wchar_t *t = &font_table[0];
-  // mvaddwstr(10,10, &font_table[0]);
-  // mvaddwstr(11,10, &font_table[4]);
-  // mvaddwstr(12,10, &font_table[8]);
-  // mvaddwstr(10,10,t);
-
-  getch();
-
-  endwin();
-
-  return 0;
-}

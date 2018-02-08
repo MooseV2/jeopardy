@@ -1,13 +1,20 @@
+
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
 LFLAGS = 
-LIBS = -lncurses
-SOURCES = jeopardy.c questions.c players.c graphics.c utilities.c
+SOURCES = jeopardy.c questions.c players.c graphics.c utilities.c font.c
 OBJECTS = $(subst .c,.o,$(SOURCES))
 EXE = jeopardy
+platform=$(shell uname)
+ifeq ($(platform),Darwin)
+LIBS = -lncurses
+else
+LIBS = -lncursesw
+endif
+
 .PHONY: clean help
 
-jeopardy : jeopardy.o questions.o players.o utilities.o graphics.o
+jeopardy : jeopardy.o questions.o players.o utilities.o graphics.o font.o
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@ 
 
 %.o : %.c

@@ -1,0 +1,1 @@
+extern void draw_question(int x, int y, int line_len, char *text, int vspacing);

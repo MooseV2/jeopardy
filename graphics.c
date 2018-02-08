@@ -1,8 +1,11 @@
 #include <ncurses.h>
 #include <stdbool.h>
 #include <string.h>
+#include <locale.h>
 #include "graphics.h"
 #include "players.h"
+#include "questions.h"
+#include "font.h"
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
@@ -20,25 +23,49 @@ void draw_rectangle(int y1, int x1, int y2, int x2)
 
 void print_player_scores(int sx, int sy, struct Player *players) {
   for (int i=0; i<4; ++i) {
+    if (players[i].turn == true) {
+      attron(COLOR_PAIR(5));
+      char controlText[100];
+      sprintf(controlText, "%s has control of the board.", players[i].name);
+      mvprintw(sy+7*6+6, 1, controlText);
+    }
+
     mvprintw(sy+i, sx, players[i].name);
     char dollars[10];
     sprintf(dollars, "$%d", players[i].score);
     mvprintw(sy+i, sx+28, dollars);
+    attroff(COLOR_PAIR(5));
+    
+  }
+}
+
+void print_categories(struct Category *categories, int sx, int sy, bool double_jeopardy) {
+  for (int i=0; i<6; ++i) {
+    mvprintc(categories[i].name, i, 0, sx, sy);
+    for (int j=0; j<5; ++j) {
+      if (!categories[i].questions[j].answered) {
+        char priceValue[10];
+        sprintf(priceValue, "$%d", (1+j)*200*(1+double_jeopardy));
+        mvprintc(priceValue, i, j+1, sx, sy);
+      }
+        
+    }
   }
 }
 
 void draw_init() {
+  setlocale(LC_ALL, "");
   initscr();
   noecho();
   curs_set(0);
   start_color();
   // init_color(COLOR_BLUE, 24, 48, 913);
-
 	init_pair(1, COLOR_BLUE, COLOR_BLACK);
   init_pair(2, COLOR_BLACK, COLOR_BLUE);
   init_pair(3, COLOR_WHITE, COLOR_BLUE);
   init_color(COLOR_GREEN, 200, 200, 200);
   init_pair(4, COLOR_GREEN, COLOR_BLACK);
+  init_pair(5, COLOR_YELLOW, COLOR_BLACK);
   keypad(stdscr, true);
   clear();
 }
@@ -54,7 +81,7 @@ void mvprintc(char *text, int cx, int cy, int offx, int offy) {
   mvprintw(offy+cy*7+3, offx+cx*33+string_offset(text), text);
 }
 
-void draw_board(struct Player *players) {
+void draw_board(struct Player *players, struct Category *categories, bool double_jeopardy, struct Question **chosenQuestion) {
   draw_init();
   int cursor_x = 1, cursor_y = 1, sx=0, sy=7;
   const w = 33 * 6;
@@ -123,7 +150,7 @@ void draw_board(struct Player *players) {
     print_player_scores(17, 2, players);
     attroff(A_UNDERLINE);
     
-
+    print_categories(categories, sx, sy, double_jeopardy);
     refresh();
     int c = getch();
     switch (c) {
@@ -137,11 +164,33 @@ void draw_board(struct Player *players) {
         cursor_x=MIN(5,cursor_x+1); break;
       case KEY_ENTER:
       case 10: // Backup for enter
-        goto END;
+        if (!categories[cursor_x].questions[cursor_y-1].answered) {
+          *chosenQuestion = &categories[cursor_x].questions[cursor_y-1];
+          goto END;
+        }
+          
     }
+    
     refresh();
   }
   END:
+  clear();
+  endwin();
+}
+
+void draw_question_board(struct Question *question) {
+  draw_init();
+  const int linelen = 30;
+  while (true) {
+    int wx, wy;
+    getmaxyx(stdscr, wy, wx);
+    draw_rectangle(0, 0, wy-1, wx-1);
+    draw_rectangle(3, 3, wy-4, wx-4);
+    draw_question((wx-linelen*3)/2-1, 10, linelen, question->question, 5);
+    refresh();
+    char c = getch();
+    break;
+  }
   clear();
   endwin();
 }

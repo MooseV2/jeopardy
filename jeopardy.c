@@ -85,6 +85,16 @@ int buzzedin() {
 int main() {
     struct Player players[NUM_PLAYERS];
     initialize_game(&players);
-    draw_board(&players);    
+    struct Category *categories;
+    categories = load_questions("questions.txt");
+    categories[0].questions[1].answered=true;
+    struct Question *chosenQuestion;
+    int nQuestions = 5*6;
+    while (nQuestions--) {
+        draw_board(&players, categories, false, &chosenQuestion);
+        draw_question_board(chosenQuestion);
+        chosenQuestion->answered=true;
+    }
+    // print_categories(categories, 0, 0);
     return 0;
 }

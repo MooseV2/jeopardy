@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include "players.h"
@@ -13,7 +14,9 @@ void initialize_game(struct Player *players)
       
       strcpy(&players[i].name, name);
       players[i].score = 0; // Score to zero
+      players[i].turn = false;
     }
+    players[0].turn = true;
 }
 
 void draw_scoreboard(struct Player *players) {
