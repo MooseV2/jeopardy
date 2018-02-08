@@ -21,13 +21,13 @@
 #define ce L"┳"
 #define cf L"┗"
 
-const char *lookup_table = "0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]_' .";
+const char *lookup_table = "0123456789:,=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]_' .";
 
 const wchar_t *font_table = 
    /* 0 1 2  */ c9 c6 c8 cz cc cc cc cz cf c6 cb cz   ca c8 cd cz cd cc cd cz ca c1 c0 cz   c9 c6 c8 cz c9 c6 cb cz cf c6 c0 cz
    /* 3 4 5  */ c9 c6 c8 cz ca c6 c3 cz cf c6 cb cz   c4 cd c4 cz cf c6 c3 cz cd cd c2 cz   c9 c6 c0 cz cf c6 c8 cz cf c6 cb cz
    /* 6 7 8  */ c9 c6 c8 cz c5 c6 c8 cz cf c6 cb cz   c9 c6 c8 cz cd cd cc cz cd cd c2 cz   c9 c6 c8 cz c5 c6 c3 cz cf c6 cb cz
-   /* 9 : ;  */ c9 c6 c8 cz cf c6 c3 cz cf c6 cb cz   cd cb cb cz c2 cb cb cz c2 cb cb cz   cd cd cb cz cd c2 cb cz cd cb cb cz
+   /* 9 : ,  */ c9 c6 c8 cz cf c6 c3 cz cf c6 cb cz   cd cb cb cz c2 cb cb cz c2 cb cb cz   cd cd cd cz cd cd cd cz cd cb cb cz
    /* = ? @  */ cd cd cd cz ca c6 c0 cz ca c6 c0 cz   c9 c6 c8 cz cd ca cb cz cd c2 cd cz   c9 c6 c8 cz cc c5 cb cz cf c6 c0 cz
    /* A B C  */ c9 c6 c8 cz c5 c6 c3 cz c2 cd c2 cz   c9 c8 cd cz c5 c1 c8 cz cf c6 cb cz   c9 c6 c0 cz cc cd cd cz cf c6 c0 cz
    /* D E F  */ ca ce c8 cz cd cc cc cz ca c1 cb cz   c9 c6 c0 cz c5 c0 cd cz cf c6 c0 cz   c9 c6 c0 cz c5 c0 cd cz c2 cd cd cz

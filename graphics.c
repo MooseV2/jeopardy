@@ -9,6 +9,8 @@
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
+int cursor_x = 1, cursor_y = 1;
+
 void draw_rectangle(int y1, int x1, int y2, int x2)
 {
     mvhline(y1, x1, 0, x2-x1);
@@ -48,7 +50,6 @@ void print_categories(struct Category *categories, int sx, int sy, bool double_j
         sprintf(priceValue, "$%d", (1+j)*200*(1+double_jeopardy));
         mvprintc(priceValue, i, j+1, sx, sy);
       }
-        
     }
   }
 }
@@ -83,7 +84,7 @@ void mvprintc(char *text, int cx, int cy, int offx, int offy) {
 
 void draw_board(struct Player *players, struct Category *categories, bool double_jeopardy, struct Question **chosenQuestion) {
   draw_init();
-  int cursor_x = 1, cursor_y = 1, sx=0, sy=7;
+  int sx=0, sy=7;
   const w = 33 * 6;
   const h = 6 * 7;
   while (true) {
