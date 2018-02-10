@@ -1,37 +1,37 @@
 6
 Geography
-This country celebrates#A1
+This country celebrates its unlikely victory against the french army on the fifth of May#Mexico
 The historic Battle of the Somme in World War 1 was fought in this country#France
-Q3#A3
-Q4#A4
-Q5#A5
+The only continent without glaciers#Australia
+The River Thjorsa, this island country's longest, originates in the Hofsjokull Glacier#Iceland
+Which body of water surrounds the country of Bahrain#Persian Gulf
 Science
 This element is third on the periodic table, right after helium#Lithium
 Table salt is made of sodium, and this element#Chlorine
 This particle found in the nucleus of an atom has no charge#Neutron
 The genome contains both the coding and noncoding genes. This, however, only contains the coding ones#Exome
-Qq5#Aa5
+In Einstein's explanation for the photoelectric effect, the contradiction he noticed that the fact that the energy of light did not seem to be related to its amplitude, but instead to its...#Frequency
 Space
 One Astrological Unit, or AU, represents the average distance between the Earth and this body#Sun
 When the mass of an object creates gravity that is too strong for light to escape, this region is created#Black hole
 This astronomer is known for his contribution in the laws of planetary motion#Kepler
 The two moons of Mars are named after Greek deities: Phobos, and his twin brother with a name meaning 'dread'#Deimos
 This space mission of 1969 marks the first time man has set foot on the moon#Apollo 11
-C Code
-q1#A1a
-Qq2#A2a
-Qq3#A3a
-Qq4#Aa4
-Qq5#Aa5
-Song
-'Do You Wanna Build a Snowman' is from this movie.#Frozen
-This series of movies made famous many songs...like 'Die Another Day' and 'Skyfall'#James Bond
-The kings horses were involved.#Humpty Dumpty
+C Programming
+As a shortcut for an if\else statement, this conditional operator takes three operands#Ternary
+We're not talking about fingers here. This word refers to a variable whose value is the address of another variable#Pointer
+Blocks of memory of arbitrary size can be requested at run-time from a heap using this library function. Programmers beware: there is no guarantee that the space isn't filled with garbage#malloc
+In 1990 he won the IEEE Richard W. Hamming Medal for creating the C programming language#Dennis Ritchie
+Bit shifting an integer to the left or right by one is equivalent to multiplication or division by which integer#2
+Songs
+The lyrics 'Do You Wanna Build a Snowman' is from this movie.#Frozen
+Shaken, not stirred. This action protagonist leads the series of movies which brought songs such as 'Die Another Day' and 'Skyfall' to the big screens#James Bond
+Artis Leon Ivey Jr, known professionaly by this name, is best known for his number one hit of 1995, 'Gangsta's Paradise'#Coolio
 This movie made famous the song 'Cups'.#Pitch Perfect
-'All of Me' has a line in it that goes like this: 'You got my head spinning...no kidding...I can’t....#pin you down
-Fruit and Vegetable
-This vegatable is also a flower#Broccoli
-The world's most popular green vegetable is this#Lettuce
-This fruit has more protein than any other#Avocado
-This first orange grew in this country#China
-Citrus Grandis is The latin name for this fruit#Grapefruit
+Astronaut Chris Hadfield made a cover of this Bowie song while aboard the International Space Station#Space Oddity
+Food
+It's the cereal that goes 'snap, crackle, pop'#Rice Krispies
+Citrus Grandis is The latin name for this fruit with a pink, juicy flesh#Grapefruit
+This American restaurant chain has over 36,000 locations worldwide, putting it in second place after McDonald's#Subway
+In U.S. military slang, this fruit becomes a hand grenade#Pineapple
+The Gros Michel was the most popular variety of this fruit until its entire species was wiped out by infection. Nowadays, the most popular variety is the Cavendish#Banana

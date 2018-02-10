@@ -67,6 +67,7 @@ void draw_init() {
   init_color(COLOR_GREEN, 200, 200, 200);
   init_pair(4, COLOR_GREEN, COLOR_BLACK);
   init_pair(5, COLOR_YELLOW, COLOR_BLACK);
+  init_pair(6, COLOR_BLACK, COLOR_RED);
   keypad(stdscr, true);
   clear();
 }
@@ -179,9 +180,36 @@ void draw_board(struct Player *players, struct Category *categories, bool double
   endwin();
 }
 
-void draw_question_board(struct Question *question) {
+bool request_answer(int x, int y, int c) {
+  attron(COLOR_PAIR(5));
+  mvprintw(y-1, x, "%s is answering:", "ANTHONY");
+  echo();
+  curs_set(true);
+  usleep(500000);
+  refresh();
+  char answer[200] = { 0 };
+  keypad(stdscr, true);
+  flushinp();
+  // while(strlen(answer) == 0)
+    mvgetstr(y, x, &answer);
+  curs_set(false);
+  noecho();
+  attroff(COLOR_PAIR(5));
+  wbkgd(stdscr, COLOR_PAIR(6));
+  refresh();
+  usleep(500000);
+  // wbkgd(stdscr, COLOR_PAIR(1));
+  wbkgd(stdscr, use_default_colors());
+  refresh();
+  mvhline(y, x, ' ', 100);
+  mvhline(y-1, x, ' ', 100);
+  
+}
+
+int draw_question_board(struct Question *question) {
   draw_init();
   const int linelen = 30;
+  char players = 0b0000;
   while (true) {
     int wx, wy;
     getmaxyx(stdscr, wy, wx);
@@ -189,8 +217,24 @@ void draw_question_board(struct Question *question) {
     draw_rectangle(3, 3, wy-4, wx-4);
     draw_question((wx-linelen*3)/2-1, 10, linelen, question->question, 5);
     refresh();
-    char c = getch();
-    break;
+    request_answer(4, wx-5, 0);
+    int c = getch();
+    keypad(stdscr, false);
+    char buzzedin = 0;
+    switch (c) {
+      case 'q': buzzedin = 0b0001; break;
+      case 'z': buzzedin = 0b0010; break;
+      case 'p': buzzedin = 0b0100; break;
+      case 'm': buzzedin = 0b1000; break;
+    }
+    if (buzzedin) {
+      if (!(buzzedin & players)) { //Valid press
+        players = players | buzzedin;
+        request_answer(4, wx-5, 0);
+      }
+    }
+    if (players == 0b1111) break;
+    // break;
   }
   clear();
   endwin();

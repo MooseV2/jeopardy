@@ -93,6 +93,7 @@ int main() {
     while (nQuestions--) {
         draw_board(&players, categories, false, &chosenQuestion);
         draw_question_board(chosenQuestion);
+        
         chosenQuestion->answered=true;
     }
     // print_categories(categories, 0, 0);
