@@ -1,4 +1,4 @@
-# Jeopardy_in_C
+# Jeopardy in C
 The game of Jeopardy written in C.
 
 # Features
