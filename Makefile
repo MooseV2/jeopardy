@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -DUSESOUND -O3
+CFLAGS = -Wall -Wextra -std=c99 -DUSESOUND
 LFLAGS = 
 SOURCES = jeopardy.c questions.c graphics.c utilities.c font.c sound.c
 OBJECTS = $(subst .c,.o,$(SOURCES))
