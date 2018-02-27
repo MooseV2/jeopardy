@@ -15,6 +15,8 @@ The game of Jeopardy written in C.
 
 Builds for macOS and Linux (Ubunutu) are provided under the `build` directory. If you are running Windows, consider not.
 
+Note: You may still need to have `libsndfile` installed to run `jeopardy_linux`. If for some reason you are unable to install it, `jeopardy_linux_nosound` is also provided.
+
 # Compilation
 
 Steps:
