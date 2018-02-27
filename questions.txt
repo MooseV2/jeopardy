@@ -12,13 +12,13 @@ This particle found in the nucleus of an atom has no charge#Neutron
 The genome contains both the coding and noncoding genes. This, however, only contains the coding ones#Exome
 In Einstein's explanation for the photoelectric effect, the contradiction he noticed that the fact that the energy of light did not seem to be related to its amplitude, but instead to its...#Frequency
 Space
-One Astrological Unit, or AU, represents the average distance between the Earth and this body#Sun
+One Astrological Unit, or AU, represents the average distance between the Earth and this body#The Sun
 When the mass of an object creates gravity that is too strong for light to escape, this region is created#Black hole
 This astronomer is known for his contribution in the laws of planetary motion#Kepler
 The two moons of Mars are named after Greek deities: Phobos, and his twin brother with a name meaning 'dread'#Deimos
 This space mission of 1969 marks the first time man has set foot on the moon#Apollo 11
 C Programming
-As a shortcut for an if\else statement, this conditional operator takes three operands#Ternary
+As a shortcut for an if \ else statement, this conditional operator takes three operands#Ternary
 We're not talking about fingers here. This word refers to a variable whose value is the address of another variable#Pointer
 Blocks of memory of arbitrary size can be requested at run-time from a heap using this library function. Programmers beware: there is no guarantee that the space isn't filled with garbage#malloc
 In 1990 he won the IEEE Richard W. Hamming Medal for creating the C programming language#Dennis Ritchie
@@ -26,8 +26,8 @@ Bit shifting an integer to the left or right by one is equivalent to multiplicat
 Songs
 The lyrics 'Do You Wanna Build a Snowman' is from this movie.#Frozen
 Shaken, not stirred. This action protagonist leads the series of movies which brought songs such as 'Die Another Day' and 'Skyfall' to the big screens#James Bond
-Artis Leon Ivey Jr, known professionaly by this name, is best known for his number one hit of 1995, 'Gangsta's Paradise'#Coolio
-This movie made famous the song 'Cups'.#Pitch Perfect
+Artist Leon Ivey Jr, known professionaly by this name, is best known for his number one hit of 1995, 'Gangsta's Paradise'#Coolio
+This movie made famous the song 'Cups'#Pitch Perfect
 Astronaut Chris Hadfield made a cover of this Bowie song while aboard the International Space Station#Space Oddity
 Food
 It's the cereal that goes 'snap, crackle, pop'#Rice Krispies

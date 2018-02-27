@@ -1,7 +1,11 @@
 #include <ncurses.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include <math.h>
+#include <unistd.h>
+#include "utilities.h"
 #include "graphics.h"
 #include "players.h"
 #include "questions.h"
@@ -35,7 +39,7 @@ void print_player_scores(int sx, int sy, struct Player *players) {
     mvprintw(sy+i, sx, players[i].name);
     char dollars[10];
     sprintf(dollars, "$%d", players[i].score);
-    mvprintw(sy+i, sx+28, dollars);
+    mvprintw(sy+i, sx+27, dollars);
     attroff(COLOR_PAIR(5));
     
   }
@@ -47,7 +51,7 @@ void print_categories(struct Category *categories, int sx, int sy, bool double_j
     for (int j=0; j<5; ++j) {
       if (!categories[i].questions[j].answered) {
         char priceValue[10];
-        sprintf(priceValue, "$%d", (1+j)*200*(1+double_jeopardy));
+        sprintf(priceValue, "$%d", categories[i].questions[j].value);
         mvprintc(priceValue, i, j+1, sx, sy);
       }
     }
@@ -61,13 +65,17 @@ void draw_init() {
   curs_set(0);
   start_color();
   // init_color(COLOR_BLUE, 24, 48, 913);
+  init_color(COLOR_BLUE, 400, 600, 900);
+  init_color(COLOR_GREEN, 600, 900, 600);
+  init_color(COLOR_MAGENTA, 200, 200, 200);
+  init_color(COLOR_RED, 900, 200, 200);
 	init_pair(1, COLOR_BLUE, COLOR_BLACK);
   init_pair(2, COLOR_BLACK, COLOR_BLUE);
   init_pair(3, COLOR_WHITE, COLOR_BLUE);
-  init_color(COLOR_GREEN, 200, 200, 200);
-  init_pair(4, COLOR_GREEN, COLOR_BLACK);
+  init_pair(4, COLOR_MAGENTA, COLOR_BLACK);
   init_pair(5, COLOR_YELLOW, COLOR_BLACK);
   init_pair(6, COLOR_BLACK, COLOR_RED);
+  init_pair(7, COLOR_BLACK, COLOR_GREEN);
   keypad(stdscr, true);
   clear();
 }
@@ -86,8 +94,8 @@ void mvprintc(char *text, int cx, int cy, int offx, int offy) {
 void draw_board(struct Player *players, struct Category *categories, bool double_jeopardy, struct Question **chosenQuestion) {
   draw_init();
   int sx=0, sy=7;
-  const w = 33 * 6;
-  const h = 6 * 7;
+  const int w = 33 * 6;
+  const int h = 6 * 7;
   while (true) {
     clear();
     // Main box
@@ -159,7 +167,7 @@ void draw_board(struct Player *players, struct Category *categories, bool double
       case KEY_UP:
         cursor_y=MAX(1,cursor_y-1); break;
       case KEY_DOWN:
-        cursor_y=MIN(6,cursor_y+1); break;
+        cursor_y=MIN(5,cursor_y+1); break;
       case KEY_LEFT:
         cursor_x=MAX(0,cursor_x-1); break;
       case KEY_RIGHT:
@@ -180,61 +188,62 @@ void draw_board(struct Player *players, struct Category *categories, bool double
   endwin();
 }
 
-bool request_answer(int x, int y, int c) {
-  attron(COLOR_PAIR(5));
-  mvprintw(y-1, x, "%s is answering:", "ANTHONY");
-  echo();
-  curs_set(true);
-  usleep(500000);
+
+void flash_correct(bool correct) {
+  wbkgd(stdscr, COLOR_PAIR(correct ? 7 : 6));
   refresh();
-  char answer[200] = { 0 };
-  keypad(stdscr, true);
-  flushinp();
-  // while(strlen(answer) == 0)
-    mvgetstr(y, x, &answer);
-  curs_set(false);
-  noecho();
-  attroff(COLOR_PAIR(5));
-  wbkgd(stdscr, COLOR_PAIR(6));
-  refresh();
-  usleep(500000);
-  // wbkgd(stdscr, COLOR_PAIR(1));
+  usleep(600000);
   wbkgd(stdscr, use_default_colors());
   refresh();
-  mvhline(y, x, ' ', 100);
-  mvhline(y-1, x, ' ', 100);
-  
+}
+bool request_answer(struct Player player, struct Question *question) {
+  char *answer = (char*)calloc(200, sizeof(char));
+  int wx, wy;
+  getmaxyx(stdscr, wy, wx);
+  attron(COLOR_PAIR(5));
+  mvprintw(wy-3, 4, "%s is answering:", player.name);
+  echo();
+  curs_set(true);
+  refresh();
+  keypad(stdscr, false);
+  flushinp();
+  move(wy-2, 4);
+  getnstr(answer, 200);
+  curs_set(false);
+  noecho();
+  bool correct = verify_answer(question->answer, answer);
+  attroff(COLOR_PAIR(5));
+  flash_correct(correct);
+  mvhline(wy-3, 4, ' ', 100);
+  mvhline(wy-2, 4, ' ', 100);
+  return correct;
 }
 
-int draw_question_board(struct Question *question) {
+int draw_question_board(struct Question *question, struct Player *player_list, int n_players, int *already_buzzed) {
   draw_init();
-  const int linelen = 30;
-  char players = 0b0000;
+  if (*already_buzzed == (int)pow(2,n_players)-1) return -1; // Break if needed
+  clear();
+  draw_billboard(question->question, 5);
+  keypad(stdscr, false);
+  refresh();
+  
   while (true) {
-    int wx, wy;
-    getmaxyx(stdscr, wy, wx);
-    draw_rectangle(0, 0, wy-1, wx-1);
-    draw_rectangle(3, 3, wy-4, wx-4);
-    draw_question((wx-linelen*3)/2-1, 10, linelen, question->question, 5);
-    refresh();
-    request_answer(4, wx-5, 0);
+    timeout(20000);
     int c = getch();
-    keypad(stdscr, false);
-    char buzzedin = 0;
-    switch (c) {
-      case 'q': buzzedin = 0b0001; break;
-      case 'z': buzzedin = 0b0010; break;
-      case 'p': buzzedin = 0b0100; break;
-      case 'm': buzzedin = 0b1000; break;
+    if (c == ERR) {
+      flash_correct(false);
+      return -1;
     }
-    if (buzzedin) {
-      if (!(buzzedin & players)) { //Valid press
-        players = players | buzzedin;
-        request_answer(4, wx-5, 0);
+    char buzzedin = 0;
+    for (int element=0; element<n_players; element++) {
+      if (c == player_list[element].buzzer) {
+        buzzedin = 1<<element;
+        if (!(buzzedin & *already_buzzed)) { // Valid press
+          *already_buzzed = *already_buzzed | buzzedin;
+          return element;
+        }
       }
     }
-    if (players == 0b1111) break;
-    // break;
   }
   clear();
   endwin();

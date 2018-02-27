@@ -17,6 +17,7 @@ struct Player {
     char name[MAX_LEN];
     int score;
     bool turn;
+    char buzzer;
 };
 
 // Returns true if the player name matches one of the existing players
