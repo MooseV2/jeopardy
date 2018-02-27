@@ -35,5 +35,7 @@ sudo apt install libsndfile-dev
 ~~~
 
 3. Run `make`
+
+
 Note: It's possible to build without libao and libsndfile by removing the -DUSESOUND flag from the Makefile.
 
