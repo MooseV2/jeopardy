@@ -48,7 +48,7 @@ int main() {
     struct Player *player_turn = &players[0];
 
     while (nQuestions--) {
-        draw_board(&players, categories, false, &chosenQuestion);
+        draw_board(&players, categories, &chosenQuestion);
         
         while (true) {
             int result = draw_question_board(chosenQuestion, &players, NUM_PLAYERS, &already_pressed);
@@ -90,7 +90,7 @@ int main() {
     char winner_text[300];
     sprintf(&winner_text, "The winner is %s with %d dollars", winner.name, winner.score);
     char typewriter[300] = {0};
-    for (int i=0; i<strlen(winner_text); i++) {
+    for (int i=0; i<(int)strlen(winner_text); i++) {
         char c = winner_text[i];
         typewriter[strlen(typewriter)] = c;
         draw_billboard(typewriter, 5);

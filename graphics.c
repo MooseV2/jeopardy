@@ -51,7 +51,7 @@ void print_player_scores(int sx, int sy, struct Player *players) {
   }
 }
 
-void print_categories(struct Category *categories, int sx, int sy, bool double_jeopardy) {
+void print_categories(struct Category *categories, int sx, int sy) {
   for (int i=0; i<6; ++i) {
     mvprintc(categories[i].name, i, 0, sx, sy);
     for (int j=0; j<5; ++j) {
@@ -70,7 +70,7 @@ void draw_init() {
   noecho();
   curs_set(0);
   start_color();
-  // init_color(COLOR_BLUE, 24, 48, 913);
+  // init_color(COLOR_BLUE, 24, 48, 913); // Jeopardy Blue (ugly)
   init_color(COLOR_BLUE, 400, 600, 900);
   init_color(COLOR_GREEN, 600, 900, 600);
   init_color(COLOR_MAGENTA, 200, 200, 200);
@@ -97,7 +97,7 @@ void mvprintc(char *text, int cx, int cy, int offx, int offy) {
   mvprintw(offy+cy*7+3, offx+cx*33+string_offset(text), text);
 }
 
-void draw_board(struct Player *players, struct Category *categories, bool double_jeopardy, struct Question **chosenQuestion) {
+void draw_board(struct Player *players, struct Category *categories, struct Question **chosenQuestion) {
   draw_init();
   int sx=0, sy=7;
   const int w = 33 * 6;
@@ -166,7 +166,7 @@ void draw_board(struct Player *players, struct Category *categories, bool double
     print_player_scores(17, 2, players);
     attroff(A_UNDERLINE);
     
-    print_categories(categories, sx, sy, double_jeopardy);
+    print_categories(categories, sx, sy);
     refresh();
     int c = getch();
     switch (c) {
@@ -186,7 +186,6 @@ void draw_board(struct Player *players, struct Category *categories, bool double
         }
           
     }
-    
     refresh();
   }
   END:

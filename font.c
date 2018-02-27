@@ -5,11 +5,14 @@
  * All rights reserved.
  *
  */
+#include <ncurses.h>
 #include <curses.h>
 #include <unistd.h>
 #include <wchar.h>
+#include <string.h>
 #include <locale.h>
 #include "font_lookup.h"
+#include "graphics.h"
 int place_char(int x, int y, char c, bool draw) {
   int index = (int)(strchr(lookup_table, toupper(c)) - lookup_table);
   if (index < 0) index = 44;
@@ -23,7 +26,7 @@ int place_char(int x, int y, char c, bool draw) {
 }
 
 int place_word(int x, int y, char *word) {
-  for (int i=0; i<strlen(word); ++i) {
+  for (int i=0; i<(int)strlen(word); ++i) {
     x += font_lengths[place_char(x, y, word[i], true)];
   }
   return x;
@@ -41,7 +44,7 @@ void draw_billboard(char *text, int vspacing) {
   const int max_line_length = 30;
   // Question text
   char question[300];
-  char full_line[10][300] = { 0 };
+  char full_line[10][300] = {{0}};
   strcpy(question, text);
   // Bounds and borders
   int x, y, wx, wy;
