@@ -1,3 +1,10 @@
+/*
+ * Jeopardy
+ *
+ * Copyright (C) 2018, Anthony DeSouza
+ * All rights reserved.
+ *
+ */
 #include <curses.h>
 #include <unistd.h>
 #include <wchar.h>

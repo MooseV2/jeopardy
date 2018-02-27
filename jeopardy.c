@@ -1,6 +1,11 @@
 /*
- * Tutorial 4 Jeopardy Project for SOFE 3950U / CSCI 3020U: Operating Systems
- *
+ *       _                                _       _ 
+ *      | | ___  ___  _ __   __ _ _ __ __| |_   _| |
+ *   _  | |/ _ \/ _ \| '_ \ / _` | '__/ _` | | | | |
+ *  | |_| |  __/ (_) | |_) | (_| | | | (_| | |_| |_|
+ *   \___/ \___|\___/| .__/ \__,_|_|  \__,_|\__, (_)
+ *                     |_|                    |___/   
+ * Jeopardy
  * Copyright (C) 2018, Anthony DeSouza
  * All rights reserved.
  *
@@ -14,21 +19,21 @@
 #include <ncurses.h>
 #include <signal.h>
 #include "questions.h"
-#include "players.h"
-#include "jeopardy.h"
+#include "utilities.h"
 #include "graphics.h"
 #include "sound.h"
 #include "font.h"
 #define BUFFER_LEN 256
 #define NUM_PLAYERS 4
 
-#include "utilities.h"
 int main() {
+    #ifdef USESOUND
     pid_t audio = fork();
     if (audio == 0) { // Child
         play("Jeopardy.aiff");
         exit(0);
     }
+    #endif /* USESOUND */
     struct Player players[NUM_PLAYERS];
     initialize_game(&players);
     whaddup_trebek();
@@ -94,7 +99,11 @@ int main() {
     }
     timeout(30000);
     getch();
+    
+    #ifdef USESOUND
     kill(audio, SIGUSR1);
+    #endif /* USESOUND */
+    
     endwin();
     return 0;
 }

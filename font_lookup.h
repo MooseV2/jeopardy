@@ -1,3 +1,5 @@
+#ifndef FONT_LOOKUP_H
+#define FONT_LOOKUP_H
 #define cz L"\0"
 #define c0 L"╸"
 #define c1 L"┻"
@@ -34,3 +36,5 @@ const wchar_t *font_table =
    /* \ ] _  */ c4 cd cb cz cf c8 cb cz cd c2 cb cz   cd c6 c8 cz cd cd cc cz cd c6 cb cz   cd cd cd cz cd cd cd cz ca c6 c0 cz
    /* '   .  */ cd c8 cb cz cd cd cb cz cd cd cd cz   cd cd cd cz cd cd cd cz cd cd cd cz   cd cd cd cz cd cd cd cz c0 cd cd cz;
 const int font_lengths[] = {3,3,3,3,3,3,3,3,3,3,1,2,3,3,3,3,3,3,3,3,3,3,3,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,2,3,1};
+
+#endif /* FONT_LOOKUP_H */

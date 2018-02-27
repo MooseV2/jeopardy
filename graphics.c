@@ -1,3 +1,10 @@
+/*
+ * Jeopardy
+ *
+ * Copyright (C) 2018, Anthony DeSouza
+ * All rights reserved.
+ *
+ */
 #include <ncurses.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -7,7 +14,6 @@
 #include <unistd.h>
 #include "utilities.h"
 #include "graphics.h"
-#include "players.h"
 #include "questions.h"
 #include "font.h"
 #define MIN(a,b) (((a)<(b))?(a):(b))

@@ -1,3 +1,11 @@
+/*
+ * Jeopardy
+ *
+ * Copyright (C) 2018, Anthony DeSouza
+ * All rights reserved.
+ *
+ */
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -6,7 +14,7 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include "players.h"
+#include "utilities.h"
 
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 

@@ -1,3 +1,11 @@
+/*
+ * Jeopardy
+ *
+ * Copyright (C) 2018, Anthony DeSouza
+ * All rights reserved.
+ *
+ */
+#ifdef USESOUND
 #include <ao/ao.h>
 #include <sndfile.h>
 #include <signal.h>
@@ -78,3 +86,4 @@ int play(const char* filename) {
     clean(device, file);
     return 0;
 }
+#endif /* USESOUND */

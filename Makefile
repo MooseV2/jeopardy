@@ -1,8 +1,7 @@
-
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
+CFLAGS = -Wall -Wextra -std=c99 -DUSESOUND
 LFLAGS = 
-SOURCES = jeopardy.c questions.c players.c graphics.c utilities.c font.c sound.c
+SOURCES = jeopardy.c questions.c graphics.c utilities.c font.c sound.c
 OBJECTS = $(subst .c,.o,$(SOURCES))
 EXE = jeopardy
 platform=$(shell uname)
@@ -14,7 +13,7 @@ endif
 
 .PHONY: clean help
 
-jeopardy : jeopardy.o questions.o players.o utilities.o graphics.o font.o sound.o
+jeopardy : jeopardy.o questions.o utilities.o graphics.o font.o sound.o
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@ 
 
 %.o : %.c
