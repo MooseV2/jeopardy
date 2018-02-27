@@ -6,9 +6,9 @@ OBJECTS = $(subst .c,.o,$(SOURCES))
 EXE = jeopardy
 platform=$(shell uname)
 ifeq ($(platform),Darwin)
-LIBS = -lncurses -lpthread -lsndfile -lao
+LIBS = -lncurses -lpthread -lsndfile -lao -lm
 else
-LIBS = -lncursesw -lpthread -lsndfile -lao
+LIBS = -lncursesw -lpthread -lsndfile -lao -lm
 endif
 
 .PHONY: clean help

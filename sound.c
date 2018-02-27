@@ -66,7 +66,7 @@ int play(const char* filename) {
     device = ao_open_live(default_driver, &format, NULL);
 
     if (device == NULL) {
-        fprintf(stderr, "Error opening device.\n");
+        // fprintf(stderr, "Error opening device.\n");
         return 1;
     }
     buffer = calloc(BUFFER_SIZE, sizeof(short));
