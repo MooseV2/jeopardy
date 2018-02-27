@@ -69,17 +69,18 @@ void draw_init() {
   initscr();
   noecho();
   curs_set(0);
+  use_default_colors();
   start_color();
   // init_color(COLOR_BLUE, 24, 48, 913); // Jeopardy Blue (ugly)
   init_color(COLOR_BLUE, 400, 600, 900);
   init_color(COLOR_GREEN, 600, 900, 600);
   init_color(COLOR_MAGENTA, 200, 200, 200);
   init_color(COLOR_RED, 900, 200, 200);
-	init_pair(1, COLOR_BLUE, COLOR_BLACK);
+	init_pair(1, COLOR_BLUE, -1);
   init_pair(2, COLOR_BLACK, COLOR_BLUE);
   init_pair(3, COLOR_WHITE, COLOR_BLUE);
-  init_pair(4, COLOR_MAGENTA, COLOR_BLACK);
-  init_pair(5, COLOR_YELLOW, COLOR_BLACK);
+  init_pair(4, COLOR_MAGENTA, -1);
+  init_pair(5, COLOR_YELLOW, -1);
   init_pair(6, COLOR_BLACK, COLOR_RED);
   init_pair(7, COLOR_BLACK, COLOR_GREEN);
   keypad(stdscr, true);
@@ -99,6 +100,7 @@ void mvprintc(char *text, int cx, int cy, int offx, int offy) {
 
 void draw_board(struct Player *players, struct Category *categories, struct Question **chosenQuestion) {
   draw_init();
+  use_default_colors();
   int sx=0, sy=7;
   const int w = 33 * 6;
   const int h = 6 * 7;
