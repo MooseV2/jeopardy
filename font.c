@@ -49,7 +49,6 @@ void draw_billboard(char *text, int vspacing) {
   // Bounds and borders
   int x, y, wx, wy;
   getmaxyx(stdscr, wy, wx);
-  x = (wx-max_line_length*3)/2-1;
   int line = 0;
   clear();
   draw_rectangle(0, 0, wy-1, wx-1);
@@ -71,7 +70,7 @@ void draw_billboard(char *text, int vspacing) {
     nextword = strtok(NULL, " ");
   }
 
-  y = (wy - ((3+vspacing)*line))/2 - 3;
+  y = (wy - ((3+vspacing)*line))/2 - 1;
 
   for (int i=0; i<=line; i++) {
     place_word((wx-word_drawn_length(&full_line[i]))/2, y+i*vspacing, full_line[i]);

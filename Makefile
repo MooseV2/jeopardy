@@ -1,14 +1,14 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -DUSESOUND
+CFLAGS = -Wall -Wextra -std=c99 -DUSESOUND -O3
 LFLAGS = 
 SOURCES = jeopardy.c questions.c graphics.c utilities.c font.c sound.c
 OBJECTS = $(subst .c,.o,$(SOURCES))
 EXE = jeopardy
 platform=$(shell uname)
 ifeq ($(platform),Darwin)
-LIBS = -lncurses -lpthread -lsndfile -lao -lm
+LIBS = -lncurses -lsndfile -lao -lm
 else
-LIBS = -lncursesw -lpthread -lsndfile -lao -lm
+LIBS = -lncursesw -lsndfile -lao -lm
 endif
 
 .PHONY: clean help
